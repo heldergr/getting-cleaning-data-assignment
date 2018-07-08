@@ -1,5 +1,4 @@
-# getting-cleaning-data-assignment
-Repository for the Getting and Cleaning Data Assignment.
+# Getting and Cleaning Data Assignment
 
 In this file I describe what I implemented to get the tidy data set as requested for this assignment.
 
