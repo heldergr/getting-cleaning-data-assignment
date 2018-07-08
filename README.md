@@ -73,36 +73,38 @@ Joing subject, feature and test data frames to a single data frame.
 df <- data.frame(Subject = subject$V1, Activity = y$V1, tests = meanOrstdTests)
 ```
 
-# 3. Uses descriptive activity names to name the activities in the data set
+## 3. Uses descriptive activity names to name the activities in the data set
+A used the utility function defined before to get the name of an activity and used the transform function to change the Activity columns from its index to its descriptive name.
 ```{r eval=false}
 df <- transform(df, Activity = getActivityLabel(activityLabels, Activity))
 ```
 
-# 4. Appropriately label the data set with descriptive variables names. Done before
+## 4. Appropriately label the data set with descriptive variables names. Done before
+Subject and Activity are already with descriptive names because I set them when created the whole data frame with this code (df <- data.frame(Subject = subject$V1, Activity = y$V1, tests = meanOrstdTests)). So I changed the name of the measure columns removing the "tests." prefix and the t or f prefix from the measures.
 ```{r eval=false}
 oldColnames <- colnames(df)
 newColnames <- gsub("tests.[t|f]", "", oldColnames)
 colnames(df) <- newColnames
 ```
 
-# 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+## 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+Previously I loaded the reshape2 package, which I used to melt and cast back the data sets to have the final result.
 ```{r eval=false}
 library(reshape2)
 ```
 
-# Melt data to have every measure specific for a subject and feature pair
+Here I used the melt functions letting Subject and Activity as ids so this way Ill all the other columns as variables.
 ```{r eval=false}
 b <- melt(df, id=c("Subject", "Activity"), measure.vars = colnames(df)[3:81])
 ```
 
-# Cast the melted data to have every measure mean by feature and subject
+So I did the cast back the data frame having grouping by Subject and Activity and so creating one column per each measure and the values are the average of that measure for the specific Subject and Activity.
 ```{r eval=false}
 ms <- dcast(b,  Subject + Activity ~ variable, mean)
 View(ms)
 ```
 
+Write the data set result.
 ```{r eval=false}
 write.table(ms, "tidydataset.txt", row.names = F)
 ```
-
-## How to load the tidy data set 
