@@ -3,24 +3,21 @@ getActivityLabel <- function(activityLabels, index) {
     activityLabels[index, 2]
 }
 
-# Base folder where data is located. test and train subfolders must be located just under it.
-dataFolder <- "<DATA-FOLDER>"
-
 # Load test data
-subjectTest <- read.table(paste0(dataFolder, "/test/subject_test.txt"))
-xTest <- read.table(paste0(dataFolder, "/test/X_test.txt"))
-yTest <- read.table(paste0(dataFolder, "/test/y_test.txt"))
+subjectTest <- read.table("./test/subject_test.txt")
+xTest <- read.table("./test/X_test.txt")
+yTest <- read.table("./test/y_test.txt")
 
 # Load trainng data
-subjectTrain <- read.table(paste0(dataFolder, "/train/subject_train.txt"))
-xTrain <- read.table(paste0(dataFolder, "/train/X_train.txt"))
-yTrain <- read.table(paste0(dataFolder, "/train/y_train.txt"))
+subjectTrain <- read.table("./train/subject_train.txt")
+xTrain <- read.table("./train/X_train.txt")
+yTrain <- read.table("./train/y_train.txt")
 
 # Load activity labels
-activityLabels <- read.table(paste0(dataFolder, "/activity_labels.txt"))
+activityLabels <- read.table("./activity_labels.txt")
 
 # Filter features to keep only the mean and std.
-features <- read.table(paste0(dataFolder, "/features.txt"))
+features <- read.table("./features.txt")
 meanOrStdFeatures <- features[grepl("mean|Mean|std", features$V2),]
 
 # 1. Merges the training and the test sets to create one data set.
