@@ -80,8 +80,8 @@ colnames(df)[2] <- "Activity"
 df$Activity <- getActivityLabel(activityLabels, df$Activity)
 ```
 
-## 4. Appropriately label the data set with descriptive variables names. Done before
-Subject and Activity are already with descriptive names because I set them when created the whole data frame with this code (df <- data.frame(Subject = subject$V1, Activity = y$V1, tests = meanOrstdTests)). So I changed the name of the measure columns removing the "tests." prefix and the t or f prefix from the measures.
+## 4. Appropriately label the data set with descriptive variables names.
+Subject and Activity are already with descriptive names because I set them in the previous step. So I changed the name of the measure columns removing the "tests." prefix and replaced the t with time and f with freq from the measures.
 ```{r eval=false}
 oldColnames <- colnames(df)
 newColnames <- gsub("^t", "time", oldColnames)
