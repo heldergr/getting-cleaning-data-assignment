@@ -36,17 +36,22 @@ colnames(meanOrStdTests) <- meanOrStdFeatures$V2
 y <- do.call(rbind, list(yTest, yTrain))
 
 # Joing subject, feature and test in one data set
-df <- data.frame(Subject = subject$V1, Activity = y$V1, tests = meanOrstdTests)
+# df <- data.frame(Subject = subject$V1, Activity = y$V1, tests = meanOrstdTests)
+df <- cbind(subject$V1, y$V1, meanOrStdTests)
 
 # 2. Extracts only the measurements on the mean and standard deviation for each measurement.
 # Done when filtering the columns by the index of the measures
 
 # 3. Uses descriptive activity names to name the activities in the data set
-df <- transform(df, Activity = getActivityLabel(activityLabels, Activity))
+# df <- transform(df, Activity = getActivityLabel(activityLabels, Activity))
+colnames(df)[1] <- "Subject"
+colnames(df)[2] <- "Activity"
+df$Activity <- getActivityLabel(activityLabels, df$Activity)
 
 # 4. Appropriately label the data set with descriptive variables names. Done before
 oldColnames <- colnames(df)
-newColnames <- gsub("tests.[t|f]", "", oldColnames)
+newColnames <- gsub("^t", "time", oldColnames)
+newColnames <- gsub("^f", "freq", newColnames)
 colnames(df) <- newColnames
 
 # 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
