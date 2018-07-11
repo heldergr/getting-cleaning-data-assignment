@@ -69,20 +69,23 @@ y <- do.call(rbind, list(yTest, yTrain))
 
 Joing subject, feature and test data frames to a single data frame.
 ```{r eval=false}
-df <- data.frame(Subject = subject$V1, Activity = y$V1, tests = meanOrstdTests)
+df <- cbind(subject$V1, y$V1, meanOrStdTests)
 ```
 
 ## 3. Uses descriptive activity names to name the activities in the data set
 A used the utility function defined before to get the name of an activity and used the transform function to change the Activity columns from its index to its descriptive name.
 ```{r eval=false}
-df <- transform(df, Activity = getActivityLabel(activityLabels, Activity))
+colnames(df)[1] <- "Subject"
+colnames(df)[2] <- "Activity"
+df$Activity <- getActivityLabel(activityLabels, df$Activity)
 ```
 
 ## 4. Appropriately label the data set with descriptive variables names. Done before
 Subject and Activity are already with descriptive names because I set them when created the whole data frame with this code (df <- data.frame(Subject = subject$V1, Activity = y$V1, tests = meanOrstdTests)). So I changed the name of the measure columns removing the "tests." prefix and the t or f prefix from the measures.
 ```{r eval=false}
 oldColnames <- colnames(df)
-newColnames <- gsub("tests.[t|f]", "", oldColnames)
+newColnames <- gsub("^t", "time", oldColnames)
+newColnames <- gsub("^f", "freq", newColnames)
 colnames(df) <- newColnames
 ```
 
